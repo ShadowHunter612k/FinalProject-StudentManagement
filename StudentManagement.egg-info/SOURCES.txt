@@ -1,0 +1,8 @@
+setup.py
+StudentManagement/__init__.py
+StudentManagement/app.py
+StudentManagement.egg-info/PKG-INFO
+StudentManagement.egg-info/SOURCES.txt
+StudentManagement.egg-info/dependency_links.txt
+StudentManagement.egg-info/requires.txt
+StudentManagement.egg-info/top_level.txt

@@ -1,0 +1,119 @@
+{% extends 'admin/master.html' %}
+
+{% block head_css %}
+    {{super() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+{% endblock head_css %}
+
+
+{% block body %}
+    <div>
+    <h1>Báo cáo tổng kết năm</h1>
+    <label for="class">Học kì</label>
+    <select name="Shu" id="class">
+      <option value="volvo">I </option>
+      <option value="saab">II</option>
+      <option value="mercedes">III</option>
+    </select>
+     <label for="class">Năm học</label>
+    <select name="Shu" id="class">
+      <option value="volvo">2020 - 2021 </option>
+      <option value="saab">2021 - 2022 </option>
+      <option value="mercedes">2022 - 2023 </option>
+    </select>
+
+    <table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">STT</th>
+      <th scope="col">Lớp</th>
+      <th scope="col">Sĩ số</th>
+      <th scope="col">Số Lượng Đạt</th>
+        <th scope="col">Tỉ Lệ</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>11A1</td>
+      <td>40</td>
+        <td>0</td>
+      <td>0%</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>11A2</td>
+      <td>40</td>
+        <td>40</td>
+      <td>100%</td>
+    </tr>
+  <tr>
+      <th scope="row">3</th>
+      <td>11A3</td>
+      <td>40</td>
+        <td>20</td>
+      <td>50%</td>
+    </tr>
+  </tbody>
+    </table>
+    </div>
+
+
+   <div>
+   <h1>Báo cáo tổng kết môn</h1>
+    <label for="class">Môn</label>
+       <select name="Shu" id="subject">
+      <option value="volvo">Toán </option>
+      <option value="saab">Văn</option>
+      <option value="mercedes">Anh</option>
+    </select>
+       <label for="class">Học kì</label>
+    <select name="Shu" id="class">
+      <option value="volvo">I </option>
+      <option value="saab">II</option>
+      <option value="mercedes">III</option>
+    </select>
+     <label for="class">Năm học</label>
+    <select name="Shu" id="class">
+      <option value="volvo">2020 - 2021 </option>
+      <option value="saab">2021 - 2022 </option>
+      <option value="mercedes">2022 - 2023 </option>
+    </select>
+
+    <table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">STT</th>
+      <th scope="col">Lớp</th>
+      <th scope="col">Sĩ số</th>
+      <th scope="col">Số Lượng Đạt</th>
+        <th scope="col">Tỉ Lệ</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>11A1</td>
+      <td>40</td>
+        <td>0</td>
+      <td>0%</td>
+    </tr>
+    <tr>
+      <th scope="row">2</th>
+      <td>11A2</td>
+      <td>40</td>
+        <td>40</td>
+      <td>100%</td>
+    </tr>
+  <tr>
+      <th scope="row">3</th>
+      <td>11A3</td>
+      <td>40</td>
+        <td>20</td>
+      <td>50%</td>
+    </tr>
+  </tbody>
+    </table>
+   </div>
+
+{% endblock body %}
