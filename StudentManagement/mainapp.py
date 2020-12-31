@@ -34,10 +34,8 @@ def login():
         # Ensure username exists and password is correct
         if account:
             if not check_password_hash(account.password, request.form.get("password")):
-                flash('Welcome')
                 return render_template("/base/Error.html")
         else:
-            flash(request.form.get("username"))
             return render_template("/base/Error.html")
         # Remember which user has logged in
         session["user_id"] = account.id
