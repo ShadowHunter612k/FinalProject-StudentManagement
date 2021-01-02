@@ -1,0 +1,142 @@
+{% extends "/base/layout.html" %}
+
+{% block title %}
+    Quy định chung
+{% endblock %}
+
+{% block main %}
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Các quy định chung</h1>
+    </div>
+
+    <!-- Content Row -->
+    <div class="row">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Danh sách quy định</h6>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                  <div class="col-4">
+                    <div class="list-group" id="list-tab" role="tablist">
+                        <a class="list-group-item list-group-item-action active" id="list-age-list" data-toggle="list" href="#list-age" role="tab" aria-controls="age">Độ tuổi</a>
+                        <a class="list-group-item list-group-item-action" id="list-numclass-list" data-toggle="list" href="#list-numclass" role="tab" aria-controls="numclass">Số lượng lớp</a>
+                        <a class="list-group-item list-group-item-action" id="list-maxstudent-list" data-toggle="list" href="#list-maxstudent" role="tab" aria-controls="maxstudent">Sĩ số</a>
+                        <a class="list-group-item list-group-item-action" id="list-classname-list" data-toggle="list" href="#list-classname" role="tab" aria-controls="classname">Tên lớp</a>
+                    </div>
+                  </div>
+                  <div class="col-8">
+                    <div class="tab-content" id="nav-tabContent">
+
+                        <div class="tab-pane fade show active" id="list-age" role="tabpanel" aria-labelledby="list-age-list">
+                          <h5>Quy định độ tuổi tối thiểu và tối đa của học sinh</h5>
+                          <span style="margin-right: 1000px; height: 1px;"> &nbsp;</span>
+                           <form action="/updateregulation/age" method="post" onsubmit="return confirm('Hãy xác nhận thay đổi quy định!');" >
+                              <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="min-age">Tối thiểu</label>
+                                    <input type="number" required="true" class="form-control" id="min-age" value="{{ regulations.min_age }}" name="min-age">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="max-age">Tối đa</label>
+                                    <input type="number" required="true" class="form-control" id="max-age" value="{{ regulations.max_age }}" name="max-age">
+                                </div>
+                              </div>
+                              <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                            </form>
+                        </div>
+
+                        <div class="tab-pane fade" id="list-numclass" role="tabpanel" aria-labelledby="list-numclass-list">
+                          <h5>Quy định số lượng lớp của trường</h5> <span style="margin-right: 1000px; height: 1px;"> &nbsp;</span>
+                            <form action="/updateregulation/numclass" method="post" onsubmit="return confirm('Hãy xác nhận thay đổi quy định!');">
+                              <div class="form-row">
+                                <div class="form-group col-xl-6">
+                                    <label for="max-class">Tối đa</label>
+                                    <input type="number" required="true" class="form-control" id="max-class" value="{{ regulations.num_of_classes }}" name="max-classes">
+                                </div>
+                              </div>
+                              <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                            </form>
+                        </div>
+
+                        <div class="tab-pane fade" id="list-maxstudent" role="tabpanel" aria-labelledby="list-maxstudent-list">
+                        <h5>Quy định sĩ số tối đa của các lớp</h5><span style="margin-right: 1000px; height: 1px;"> &nbsp;</span>
+                        <form action="/updateregulation/maxstudents" method="post" onsubmit="return confirm('Hãy xác nhận thay đổi quy định!');">
+                          <div class="form-row">
+                            <div class="form-group col-xl-6">
+                                <label for="max-student">Tối đa</label>
+                                <input type="number" required="true" class="form-control" id="max-student" value="{{ regulations.max_students }}" name="max-students" >
+                            </div>
+                          </div>
+                          <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                        </form>
+                      </div>
+
+                        <div class="tab-pane fade" id="list-classname" role="tabpanel" aria-labelledby="list-classname-list">
+                           <h5>Quy định tên của các lớp </h5><span style="margin-right: 1000px; height: 1px;"> &nbsp;</span>
+                            <div class="card shadow mb-4">
+                                <a href="#collapseClassList" class="d-block card-header py-3 collapsed" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseClassList">
+                                    <h6 class="m-0 font-weight-bold text-primary">Danh sách tên các lớp</h6>
+                                </a>
+                                <div class="collapse" id="collapseClassList" style="">
+                                    <div class="card-body">
+                                        <table class="table">
+                                <thead>
+                                <tr>
+                                  <th scope="col">Khối</th>
+                                  <th scope="col">Lớp</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                              {% for grade in grades %}
+                                  <tr>
+                                      <th scope="row" rowspan="{{ listcount[grade.name] + 1}}">{{ grade.name }}</th>
+                                  </tr>
+                                  {% for class in classes %}
+                                      {% if grade.grade_id == class.grade %}
+                                          <tr>
+                                              <td>{{ class.name }}</td>
+                                          </tr>
+                                      {%  endif %}
+                                  {% endfor %}
+                              {% endfor %}
+
+                              </tbody>
+                            </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <form action="/updateregulation/classname" method="post" onsubmit="return confirm('Hãy xác nhận thay đổi tên lớp!');">
+                                <div class="form-row">
+                                    <div class="form-group col-xl-6">
+                                        <label for="classes">Chọn lớp</label>
+                                        <select id="classes" class="form-control col-sm-4" name="class-id" required="true" onChange="changeClassname(this);">
+                                            <option value="" selected disabled hidden>--</option>
+                                            {% for class in classes %}
+                                                <option value="{{ class.class_id }}">{{ class.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </br>
+                                        <label for="max-student">Nhập tên lớp mới</label>
+                                        <input required="true" type="text" class="form-control col-xs-2" id="classname" name="classname" >
+                                    </div>
+                                </div>
+                          <button type="submit" class="btn btn-primary">Đổi tên lớp</button>
+                            </form>
+                       </div>
+
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function changeClassname(sel) {
+        var name = sel.options[sel.selectedIndex].text;
+         document.getElementById("classname").value = name;
+        }
+    </script>
+{% endblock %}
+

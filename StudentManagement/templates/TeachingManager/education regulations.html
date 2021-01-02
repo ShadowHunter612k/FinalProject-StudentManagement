@@ -1,0 +1,116 @@
+{% extends "/base/layout.html" %}
+
+{% block title %}
+    Quy định môn học
+{% endblock %}
+
+{% block main %}
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Các quy định môn học</h1>
+    </div>
+
+    <!-- Content Row -->
+    <div class="row">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Danh sách quy định</h6>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                  <div class="col-4">
+                    <div class="list-group" id="list-tab" role="tablist">
+                        <a class="list-group-item list-group-item-action active" id="list-subjectnum-list" data-toggle="list" href="#list-subjectnum" role="tab" aria-controls="age">Số lượng môn học</a>
+                        <a class="list-group-item list-group-item-action" id="list-passgrade-list" data-toggle="list" href="#list-passgrade" role="tab" aria-controls="passgrade">Điểm chuẩn </a>
+                        <a class="list-group-item list-group-item-action" id="list-subjects-list" data-toggle="list" href="#list-subjects" role="tab" aria-controls="subjects">Môn học</a>
+                    </div>
+                  </div>
+                  <div class="col-8">
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active" id="list-subjectnum" role="tabpanel" aria-labelledby="list-subjectnum-list">
+                          <h5>Quy định số lượng môn học</h5>
+                          <span style="margin-right: 1000px; height: 1px;"> &nbsp;</span>
+                           <form action="/updateregulation/numofsubjects" method="post" onsubmit="return confirm('Hãy xác nhận thay đổi quy định!');" >
+                              <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="min-age">Tối đa</label>
+                                    <input type="number" required="true" class="form-control" id="min-age" value="{{ regulations.num_of_subjects }}" name="numofsubjects">
+                                </div>
+                              </div>
+                              <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                            </form>
+                        </div>
+
+                        <div class="tab-pane fade" id="list-passgrade" role="tabpanel" aria-labelledby="list-passgrade-list">
+                          <h5>Quy định điểm chuẩn đạt môn</h5> <span style="margin-right: 1000px; height: 1px;"> &nbsp;</span>
+                            <form action="/updateregulation/passgrade" method="post" onsubmit="return confirm('Hãy xác nhận thay đổi quy định!');">
+                                <div class="form-row">
+                                    <div class="form-group col-xl-6">
+                                        <label for="max-class">Điểm chuẩn </label>
+                                        <input type="number" required="true" class="form-control" id="max-class" value="{{ regulations.pass_grade }}" name="passgrade">
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                            </form>
+                        </div>
+
+                        <div class="tab-pane fade" id="list-subjects" role="tabpanel" aria-labelledby="list-subjects-list">
+                           <h5>Quy định tên các môn học </h5><span style="margin-right: 1000px; height: 1px;"> &nbsp;</span>
+                            <div class="card shadow mb-4">
+                                <a href="#collapseClassList" class="d-block card-header py-3 collapsed" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseClassList">
+                                    <h6 class="m-0 font-weight-bold text-primary">Danh sách môn học</h6>
+                                </a>
+                                <div class="collapse" id="collapseClassList" style="">
+                                    <div class="card-body">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                  <th scope="col">#</th>
+                                                  <th scope="col">Môn học</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                              {% for subject in subjects %}
+                                                  <tr>
+                                                      <th scope="row" >{{ subject.subject_id }}</th>
+                                                      <td> {{ subject.name }} </td>
+                                                  </tr>
+                                              {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <form action="/updateregulation/subjectname" method="post" onsubmit="return confirm('Hãy xác nhận thay đổi tên môn học!');">
+                                <div class="form-row">
+                                    <div class="form-group col-xl-6">
+                                        <label for="subjects">Chọn môn học</label>
+                                        <select id="subjects" class="form-control col-sm-5" name="subject-id" required="true" onChange="changeSubjectname(this);">
+                                            <option value="" selected disabled hidden>--</option>
+                                            {% for subject in subjects %}
+                                                <option value="{{ subject.subject_id }}">{{ subject.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </br>
+                                        <label for="max-student">Nhập tên môn học</label>
+                                        <input required="true" type="text" class="form-control col-xs-2" id="subjectname" name="subject-name" >
+                                    </div>
+                                </div>
+                          <button type="submit" class="btn btn-primary">Đổi tên môn học</button>
+                            </form>
+                       </div>
+
+                    </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function changeSubjectname(sel) {
+        var name = sel.options[sel.selectedIndex].text;
+         document.getElementById("subjectname").value = name;
+        }
+    </script>
+{% endblock %}
+

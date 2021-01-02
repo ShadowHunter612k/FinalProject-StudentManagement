@@ -64,6 +64,7 @@ class Regulations(db.Model):
     max_students = Column(Integer)
     num_of_classes = Column(Integer)
     pass_grade = Column(Integer)
+    num_of_subjects = Column(Integer)
 
 
 class Subjects(db.Model):
