@@ -1,0 +1,59 @@
+{% extends "/base/layout.html" %}
+
+{% block title %}
+    Tiếp nhận học sinh
+{% endblock %}
+
+{% block main %}
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Tiếp nhận học sinh</h1>
+    </div>
+    <div class="row d-flex justify-content-center">
+        <h3>Nhập thông tin học sinh</h3>
+    </div>
+    <!-- Content Row -->
+    <div class="row d-flex justify-content-center">
+
+        <form action="/managestudent/addstudent" method="post" >
+            <span style="margin-right: 500px; height: 1px;"> &nbsp;</span>
+             <div class="form-row">
+                 <div class="form-group col-md-6">
+                  <label for="inputFname">Tên</label>
+                  <input type="text" required="true" class="form-control" id="inputFname" name="firstname" >
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="inputLname">Họ và tên lót</label>
+                  <input type="text" required="true" class="form-control" id="inputLname" name="lastname">
+                </div>
+            </div>
+
+        <div class="form-group">
+            <label for="inputEmail">Email</label>
+            <input type="email" required="true" class="form-control" id="inputEmail"  name="email">
+        </div>
+
+          <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="birthday">Ngày sinh</label>
+                <input type="date" class="form-control" id="birthday" name="birthday">
+            </div>
+            <div class="form-group col-md-4">
+              <label for="inputGender">Giới tính</label>
+              <select id="inputGender" class="form-control" name="gender">
+                <option value="male" selected>Nam</option>
+                <option value="female" > Nữ</option>
+              </select>
+            </div>
+          </div>
+
+        <div class="form-group">
+            <label for="inputAddress">Địa chỉ</label>
+            <input type="text" required="true" class="form-control" id="inputAddress" name="address" >
+          </div>
+
+
+          <button type="submit" class="btn btn-lg btn-primary float-right">Tiếp nhận</button>
+        </form>
+    </div>
+{% endblock %}

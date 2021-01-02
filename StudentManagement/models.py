@@ -48,7 +48,7 @@ class Students(db.Model):
     address = Column(String(50), nullable=False)
     email = Column(String(50), nullable=False)
     birthdate = Column(Date, nullable=False)
-    class_id = Column(Integer, ForeignKey(Classes.class_id), nullable=False)
+    class_id = Column(Integer, ForeignKey(Classes.class_id), nullable=True)
     class_name = db.relationship('Classes', backref=db.backref('class', lazy='dynamic'))
 
     def __str__(self):

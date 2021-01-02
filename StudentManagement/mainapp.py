@@ -53,6 +53,7 @@ def login():
 
 
 @app.route("/logout")
+@login_required
 def logout():
     """Log user out"""
 
@@ -77,6 +78,7 @@ def generalRegulations():
     # tạo 1 dict lưu số lượng lớp theo khối
     classes_by_grade = {}
 
+    # lọc số lượng lớp theo khối
     for grade in grades:
         count = 0
         for classs in classes:
@@ -89,6 +91,7 @@ def generalRegulations():
 
 
 @app.route("/updateregulation/age", methods=["POST"])
+@login_required
 def updateAgeRegulation():
     """thay đổi quy định về độ tuổi"""
     new_min_age = request.form.get("min-age")
@@ -104,6 +107,7 @@ def updateAgeRegulation():
 
 
 @app.route("/updateregulation/numclass", methods=["POST"])
+@login_required
 def updateNumClassRegulation():
     """thay đổi quy định về số lượng lớp """
     new_max_class = request.form.get("max-classes")
@@ -117,6 +121,7 @@ def updateNumClassRegulation():
 
 
 @app.route("/updateregulation/maxstudents", methods=["POST"])
+@login_required
 def updateNumOfStudentRegulation():
     """thay đổi quy định về sĩ số tối đa """
     new_max_students = request.form.get("max-students")
@@ -130,6 +135,7 @@ def updateNumOfStudentRegulation():
 
 
 @app.route("/updateregulation/classname", methods=["POST"])
+@login_required
 def updateClassNameRegulation():
     """thay đổi quy định về tên lớp tối đa """
     new_class_name = request.form.get("classname")
@@ -156,6 +162,7 @@ def educationRegulation():
 
 
 @app.route("/updateregulation/numofsubjects", methods=["POST"])
+@login_required
 def updateNumOfSubjectRegulation():
     """thay đổi quy định về độ số lượng môn học"""
     new_numofsubjects = request.form.get("numofsubjects")
@@ -169,6 +176,7 @@ def updateNumOfSubjectRegulation():
 
 
 @app.route("/updateregulation/passgrade", methods=["POST"])
+@login_required
 def updatePassGradeRegulation():
     """thay đổi quy định về điểm chuẩn đạt môn"""
     new_passgrade = request.form.get("passgrade")
@@ -182,6 +190,7 @@ def updatePassGradeRegulation():
 
 
 @app.route("/updateregulation/subjectname", methods=["POST"])
+@login_required
 def updateSubjectNameRegulation():
     """thay đổi quy định về tên môn học """
     new_subject_name = request.form.get("subject-name")
@@ -194,6 +203,36 @@ def updateSubjectNameRegulation():
     # flask notice message
     flash('Môn học '+old_subject_name+' đã được đổi tên thành '+new_subject_name)
     return redirect("/educationregulations")
+
+
+@app.route("/managestudent")
+@login_required
+def addStudentPage():
+    """đi đến trang tiếp nhận học sinh"""
+    return render_template("TeachingManager/add student.html")
+
+@app.route("/managestudent/addstudent" , methods=["POST"])
+@login_required
+def addStudent():
+    """Thêm học sinh mới"""
+
+    # lấy request thông tin học sinh
+    firstname = request.form.get("firstname")
+    lastname = request.form.get("lastname")
+    gender = request.form.get("gender")
+    email = request.form.get("email")
+    birthdate = request.form.get("birthday")
+    address = request.form.get("address")
+
+    # thêm học sinh vào csdl
+    student = Students(firstname=firstname,lastname=lastname,gender=gender,address=address,email=email,birthdate=birthdate)
+    db.session.add(student)
+    db.session.commit()
+
+    # flask notice message
+    flash('HỌc sinh '+lastname+' '+firstname+' đã được tiếp nhận thành công!')
+    return redirect("/managestudent")
+
 
 
 
