@@ -1,0 +1,66 @@
+{% extends "/base/layout.html" %}
+
+{% block title %}
+    Tra cứu học sinh
+{% endblock %}
+
+{% block main %}
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Tra cứu học sinh</h1>
+
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Danh sách học sinh</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>StudentID</th>
+                                <th>Tên</th>
+                                <th>Họ và tên đệm</th>
+                                <th>Email</th>
+                                <th>Giới tính</th>
+                                <th>Ngày sinh</th>
+                                <th>Địa chỉ</th>
+                                <td>Lớp</td>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>StudentID</th>
+                                <th>Tên</th>
+                                <th>Họ và tên đệm</th>
+                                <th>Email</th>
+                                <th>Giới tính</th>
+                                <th>Ngày sinh</th>
+                                <th>Địa chỉ</th>
+                                <td>Lớp</td>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            {% for student in students %}
+                                <tr>
+                                    <td>{{ student.student_id }}</td>
+                                    <td>{{ student.firstname }}</td>
+                                    <td>{{ student.lastname }}</td>
+                                    <td>{{ student.email }}</td>
+                                    <td>{{ student.gender }}</td>
+                                    <td>{{ student.birthdate }}</td>
+                                    <td>{{ student.address }}</td>
+                                    {% if student.class_id == None %}
+                                        <td>chưa xếp lớp</td>
+                                    {% else %}
+                                        <td>{{ student.class_name }}</td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+{% endblock %}

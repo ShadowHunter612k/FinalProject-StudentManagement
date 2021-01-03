@@ -1,0 +1,76 @@
+{% extends "/base/layout.html" %}
+
+{% block title %}
+    Nhập điểm
+{% endblock %}
+
+{% block main %}
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Nhập điểm</h1>
+    </div>
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Nhập điểm môn {{ teacher.subject }} </h6>
+            <h8 class="float-right">Lớp&nbsp;{{ class_.name }}&nbsp;&nbsp;Học kì&nbsp;{{ score_board[0].semester }}&nbsp;&nbsp;Năm
+                học&nbsp;{{ score_board[0].school_year }}</h8>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>StudentID</th>
+                        <th>Tên</th>
+                        <th>Họ và tên đệm</th>
+                        <th>Lớp</th>
+                        <th>Điểm</th>
+                    </tr>
+                    </thead>
+                    <tfoot>
+                    <tr>
+                        <th>StudentID</th>
+                        <th>Tên</th>
+                        <th>Họ và tên đệm</th>
+                        <th>Lớp</th>
+                        <th>Điểm</th>
+                    </tr>
+                    </tfoot>
+                    <tbody>
+                    {% for board in score_board %}
+                        {% for student in students %}
+                            {% if board.student_id == student.student_id %}
+                                <tr>
+                                    <td>{{ student.student_id }}</td>
+                                    <td>{{ student.firstname }}</td>
+                                    <td>{{ student.lastname }}</td>
+                                    <td>{{ student.class_name }}</td>
+                                    {% set total_score = 0 %}
+                                    {% set count = 0 %}
+                                    {% for score in scores %}
+                                        {% if score.board_id == board.board_id %}
+                                            {% set total_score = total_score + score.score %}
+                                            {% set count = count + 1 %}
+                                        {% endif %}
+                                    {% endfor %}
+                                    <td>
+                                        <form action="#" id="{{ student.student_id }}" >
+                                            {% if total_score == 0 %}
+                                                <input id="scoreInput" data-id="{{ student.student_id }}" type="number" name="score"/>
+                                            {% else %}
+                                                <input type="number" value="{{ total_score }}" name="score"/>
+                                            {% endif %}
+                                        </form>
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

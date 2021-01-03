@@ -1,0 +1,63 @@
+{% extends "/base/layout.html" %}
+
+{% block title %}
+    Nhập điểm
+{% endblock %}
+
+{% block main %}
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Nhập điểm</h1>
+    </div>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Nhập điểm môn {{ teacher.subject }}</h6>
+        </div>
+        <div class="card-body justify-content-center">
+            <form class="justify-content-center" action="/managestudent/scoreinfo" method="post">
+                <div class="form-row align-items-center">
+                    <div class="col-auto my-1">
+                        <label class="mr-sm-2" for="yearSelect">Chọn năm học</label>
+                        <select class="form-control mr-sm-2" id="yearSelect" name="year_id">
+                            <option selected>Chọn...</option>
+                            {% for year in school_years %}
+                                <option value="{{ year.year_id }}">{{ year.year }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-auto my-1">
+                        <label class="mr-sm-2" for="semesterSelect">Chọn học kì</label>
+                        <select class="form-control mr-sm-2" id="semesterSelect" name="semester_id">
+                            <option selected>Chọn...</option>
+                            {% for semes in semesters %}
+                                <option value="{{ semes.semester_id }}">{{ semes.semester }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-auto my-1">
+                        <label class="mr-sm-2" for="classSelect">Chọn lớp</label>
+                        <select class="form-control mr-sm-2" id="classSelect" name="class_id">
+                            <option selected>Chọn...</option>
+                            {% for assignment in assignments %}
+                                <option value="{{ assignment.class_id }}">{{ assignment.class_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-auto my-1">
+                        <label class="mr-sm-2" for="scoreTypeSelect">Chọn loại điểm</label>
+                        <select class="form-control mr-sm-2" id="scoreTypeSelect" name="score_type">
+                            <option selected>Chọn...</option>
+                            <option value="1">15 phút</option>
+                            <option value="2">1 tiết</option>
+                            <option value="3">học kì</option>
+                        </select>
+                    </div>
+                </div>
+            <div class="col-auto my-1">
+                        <button type="submit" class="btn btn-primary">Lấy danh sách lớp</button>
+                    </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

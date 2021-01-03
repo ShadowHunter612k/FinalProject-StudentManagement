@@ -1,0 +1,49 @@
+{% extends "/base/layout.html" %}
+
+{% block title %}
+    Thêm người dùng
+{% endblock %}
+
+{% block main %}
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Thêm người dùng</h1>
+    </div>
+    <div class="row d-flex justify-content-center">
+        <h3>Nhập thông tin tài khoản</h3>
+    </div>
+    <!-- Content Row -->
+    <div class="row d-flex justify-content-center">
+
+        <form action="/manageaccount/adduser" method="post" >
+            <span style="margin-right: 500px; height: 1px;"> &nbsp;</span>
+
+        <div class="form-group">
+            <label for="inputUsername">Tên đăng nhập</label>
+            <input type="text" required="true" class="form-control" id="inputUsername"  name="username">
+        </div>
+
+        <div class="form-group">
+            <label for="inputPassword">Password</label>
+            <input type="password" required="true" class="form-control" id="inputPassword"  name="password">
+        </div>
+
+        <div class="form-group">
+            <label for="inputName">Tên </label>
+            <input type="text" required="true" class="form-control" id="inputName"  name="name">
+        </div>
+
+          <div class="form-row">
+            <div class="form-group col-md-4">
+              <label for="inputRole">Chức vụ</label>
+              <select id="inputRole" class="form-control" name="role">
+                <option value="1" selected>Giáo vụ</option>
+                <option value="2" >Giáo viên</option>
+              </select>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-lg btn-primary float-right">Thêm người dùng</button>
+        </form>
+    </div>
+{% endblock %}
