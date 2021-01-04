@@ -1,0 +1,36 @@
+{% extends "/base/layout.html" %}
+
+{% block title %}
+    Xem kết quả học tập
+{% endblock %}
+
+{% block main %}
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Xem kết quả học tập</h1>
+    </div>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Kết quả học tập</h6>
+        </div>
+        <div class="card-body justify-content-center">
+            <form class="justify-content-center" action="/studentsmanager/studyresult" method="post">
+                <div class="form-row align-items-center">
+                    <div class="col-auto my-1">
+                        <label class="mr-sm-2" for="yearSelect">Chọn năm học</label>
+                        <select class="form-control mr-sm-2" required id="yearSelect" name="year_id">
+                            <option value="" selected disabled hidden>Chọn...</option>
+                            {% for year in school_years %}
+                                <option value="{{ year.year_id }}">{{ year.year }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+            <div class="col-auto my-1">
+                        <button type="submit" class="btn btn-primary">Xem kết quả học tập</button>
+                    </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

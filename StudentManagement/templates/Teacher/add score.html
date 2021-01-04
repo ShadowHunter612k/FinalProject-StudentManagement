@@ -12,13 +12,13 @@
 
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Nhập điểm môn {{ teacher.subject }} </h6>
-            <h8 class="float-right">Lớp&nbsp;{{ class_.name }}&nbsp;&nbsp;Học kì&nbsp;{{ score_board[0].semester }}&nbsp;&nbsp;Năm
-                học&nbsp;{{ score_board[0].school_year }}</h8>
+            <h6 class="m-0 font-weight-bold text-secondary">Bảng điểm <a href="#">{{ type.type_name }}</a>  môn <a href="#">{{ teacher.subject }}</a> </h6>
+            <h8 class="float-right">Lớp:&nbsp;<a href="#">{{ class_.name }}</a>&nbsp;&nbsp;Học kì:&nbsp;<a href="#">{{ score_board[0].semester }}</a>&nbsp;&nbsp;Năm
+                học:&nbsp;<a href="#">{{ score_board[0].school_year }}</a></h8>
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered">
+                <table class="table table-bordered" id="scoreboard-table" name="table">
                     <thead>
                     <tr>
                         <th>StudentID</th>
@@ -26,6 +26,7 @@
                         <th>Họ và tên đệm</th>
                         <th>Lớp</th>
                         <th>Điểm</th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tfoot>
@@ -35,6 +36,7 @@
                         <th>Họ và tên đệm</th>
                         <th>Lớp</th>
                         <th>Điểm</th>
+                        <th></th>
                     </tr>
                     </tfoot>
                     <tbody>
@@ -42,27 +44,34 @@
                         {% for student in students %}
                             {% if board.student_id == student.student_id %}
                                 <tr>
+                                <form class="submit" action="/addscores/savetempscores" method="post">
                                     <td>{{ student.student_id }}</td>
                                     <td>{{ student.firstname }}</td>
                                     <td>{{ student.lastname }}</td>
                                     <td>{{ student.class_name }}</td>
-                                    {% set total_score = 0 %}
-                                    {% set count = 0 %}
+                                    {% set check = namespace(found=false)%}
                                     {% for score in scores %}
                                         {% if score.board_id == board.board_id %}
-                                            {% set total_score = total_score + score.score %}
-                                            {% set count = count + 1 %}
+                                            {% set check.found = true %}
+                                            <td>{{ score.score }}</td>
                                         {% endif %}
                                     {% endfor %}
+
+                                    {% if not check.found %}
+                                        <td>
+                                            <input class="col-sm-9" name="score">
+                                        </td>
+                                        <td>
+                                            <input type="number" value="{{ board.board_id }}" name="board_id" hidden>
+                                            <button type="submit"><i class="fas fa-fw fa-edit "></i></button>
+                                        </td>
+                                    {% else %}
                                     <td>
-                                        <form action="#" id="{{ student.student_id }}" >
-                                            {% if total_score == 0 %}
-                                                <input id="scoreInput" data-id="{{ student.student_id }}" type="number" name="score"/>
-                                            {% else %}
-                                                <input type="number" value="{{ total_score }}" name="score"/>
-                                            {% endif %}
-                                        </form>
+                                        Đã lưu điểm
                                     </td>
+                                    {% endif %}
+
+                                </form>
                                 </tr>
                             {% endif %}
                         {% endfor %}
@@ -71,6 +80,13 @@
                 </table>
             </div>
         </div>
+    <form class="d-flex justify-content-center"action="/managestudent/addscore" method="post" onsubmit="return confirm('Xác nhận lưu bảng điểm');">
+        <button type="submit" class="btn btn-lg btn-primary">Lưu điểm</button>
+    </form>
     </div>
+{% endblock %}
 
+{% block customscripts %}
+    <script src="https://editor.datatables.net/extensions/Editor/js/dataTables.editor.min.js"></script>
+    <script src="/static/scores-datatable.js"></script>
 {% endblock %}

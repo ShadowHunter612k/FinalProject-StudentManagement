@@ -1,0 +1,60 @@
+{% extends "/base/layout.html" %}
+
+{% block title %}
+    Tổng kết môn học
+{% endblock %}
+
+{% block main %}
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Báo cáo tổng kết môn</h1>
+    </div>
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-secondary">Tổng kết môn <a href="#">{{ teacher.subject }}</a> </h6>
+            <h8 class="float-right">Học kì:&nbsp;<a href="#">{{ semester.semester }}</a>&nbsp;&nbsp;Năm
+                học:&nbsp;<a href="#">{{ year.year }}</a></h8>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="datatable" name="table">
+                    <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Lớp</th>
+                        <th>Sĩ số</th>
+                        <th>Số lượng đạt</th>
+                        <th>Tỉ lệ</th>
+                    </tr>
+                    </thead>
+                    <tfoot>
+                    <tr>
+                        <th>STT</th>
+                        <th>Lớp</th>
+                        <th>Sĩ số</th>
+                        <th>Số lượng đạt</th>
+                        <th>Tỉ lệ</th>
+                    </tr>
+                    </tfoot>
+                    <tbody>
+                        {% for class in classes %}
+                            <tr>
+                                <td>{{ class.class_id }}</td>
+                                <td>{{ class.name }}</td>
+                                <td>{{ class_info[class.class_id][0] }}</td>
+                                <td>{{ class_info[class.class_id][1] }}</td>
+                                <td>{{ class_info[class.class_id][2] }}%</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block customscripts %}
+
+{% endblock %}

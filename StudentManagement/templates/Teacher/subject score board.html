@@ -1,0 +1,124 @@
+{% extends "/base/layout.html" %}
+
+{% block title %}
+    Bảng điểm
+{% endblock %}
+
+{% block main %}
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Bảng điểm</h1>
+    </div>
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-secondary">Bảng điểm môn <a href="#">{{ teacher.subject }}</a> </h6>
+            <h8 class="float-right">Lớp:&nbsp;<a href="#">{{ class_.name }}</a>&nbsp;&nbsp;Học kì:&nbsp;<a href="#">{{ score_boards[0].semester }}</a>&nbsp;&nbsp;Năm
+                học:&nbsp;<a href="#">{{ score_boards[0].school_year }}</a></h8>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" name="table">
+                    <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Họ và tên </th>
+                        <th>Điểm 15'</th>
+                        <th>Điểm 1 tiết</th>
+                        <th>Điểm HK</th>
+                    </tr>
+                    </thead>
+                    <tfoot>
+                    <tr>
+                        <th>STT</th>
+                        <th>Họ và tên </th>
+                        <th>Điểm 15'</th>
+                        <th>Điểm 1 tiết</th>
+                        <th>Điểm HK</th>
+                    </tr>
+                    </tfoot>
+                    <tbody>
+                    {% set index = namespace(i=0) %}
+                    <!-- lấy từng học sinh-->
+                     {% for student in students %}
+                        {% set index.i = index.i + 1 %}
+                        <tr>
+                            <!-- STT-->
+                            <td>{{ index.i }}</td>
+                            <!-- họ và tên -->
+                            <td>{{ student.lastname +' '+student.firstname }}</td>
+                            <!-- kiểm tra xem có bảng điểm không-->
+                            {% set flag = namespace(found=false) %}
+                             <!-- lấy bảng điểm của học sinh-->
+                            {% for board in score_boards  %}
+
+                                {% if student.student_id == board.student_id %}
+                                    {% set flag.found = true %}
+                                    <!-- kiểm tra xem có điểm không-->
+                                    {% set check = namespace(found=false) %}
+
+                                    <!-- lấy điểm 15p-->
+                                    {% for score in scores %}
+
+                                        {% if score.board_id == board.board_id %}
+                                            {% if score.type_id == 1 %}
+                                                {% set check.found = true %}
+                                                <td>{{ score.score }}</td>
+                                            {% endif %}
+                                        {% endif %}
+
+                                    {% endfor %}
+                                    <!--nếu không tìm thấy điểm-->
+                                    {% if not check.found %}
+                                        <td>-</td>
+                                    {% endif %}
+                                    <!-- reset check -->
+                                    {% set check.found = false %}
+
+                                     <!-- lấy điểm 1 tiết-->
+                                    {% for score in scores %}
+                                        {% if score.board_id == board.board_id and score.type_id == 2 %}
+                                            {% set check.found = true %}
+                                            <td>{{ score.score }}</td>
+                                        {% endif %}
+                                    {% endfor %}
+                                    <!--nếu không tìm thấy điểm-->
+                                    {% if not check.found %}
+                                        <td>-</td>
+                                    {% endif %}
+                                    <!-- reset check -->
+                                    {% set check.found = false %}
+
+                                     <!-- lấy điểm học kì-->
+                                    {% for score in scores %}
+                                        {% if score.board_id == board.board_id and score.type_id == 3 %}
+                                            {% set check.found = true %}
+                                            <td>{{ score.score }}</td>
+                                        {% endif %}
+                                    {% endfor %}
+                                    <!--nếu không tìm thấy điểm-->
+                                    {% if not check.found %}
+                                        <td>-</td>
+                                    {% endif %}
+                                    <!-- reset check -->
+                                    {% set check.found = false %}
+                                {% endif %}
+                                {% endfor %}
+                                <!--nếu không có bản điểm-->
+                                {% if not flag.found %}
+                                        <td>-</td><td>-</td><td>-</td>
+                                {% endif %}
+                        </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block customscripts %}
+
+{% endblock %}
